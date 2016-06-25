@@ -15,10 +15,9 @@ function run(args, noDownload) {
   return new Promise((ok, ng) => {
     require('child_process')
       .spawn(binPath, args, {stdio: 'inherit'})
-      .on('exit', ok)
+      .on('exit', process.exit)
       .on('error', ng)
   })
-  .then(process.exit)
   .catch(err => {
     if(err.code != 'ENOENT' || noDownload) {
       return Promise.reject(err)
