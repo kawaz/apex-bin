@@ -50,7 +50,7 @@ function download() {
       }))
       .catch(err => new Promise((ok, ng) => {
         fs.unlink(binPathTmp, (err) => {
-          if(err) return ng(err);
+          if(err && err.code != 'ENOENT') return ng(err);
           ok()
         })
       }))
