@@ -1,0 +1,34 @@
+{
+  "name": "@kawaz/apex-bin",
+  "version": "0.0.1",
+  "description": "Binary wrapper for apex",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/kawaz/a-ex-bin.git"
+  },
+  "author": {
+    "name": "Yoshiaki Kawazu",
+    "email": "kawazzz@gmail.com",
+    "url": "twitter.com/kawaz"
+  },
+  "license": "MIT",
+  "bin": {
+    "apex": "cli.js"
+  },
+  "files": [
+    "cli.js",
+    "index.js"
+  ],
+  "scripts": {
+    "test": "node cli.js version | grep -q '^Apex version '"
+  },
+  "engines": {
+    "node": ">=4.0.0"
+  },
+  "keywords": [
+    "binary"
+  ],
+  "dependencies": {
+    "node-fetch": "^1.5.3"
+  }
+}
