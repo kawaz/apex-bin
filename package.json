@@ -4,7 +4,7 @@
   "description": "Binary wrapper for apex",
   "repository": {
     "type": "git",
-    "url": "http://github.com/kawaz/a-ex-bin.git"
+    "url": "http://github.com/kawaz/apex-bin.git"
   },
   "author": {
     "name": "Yoshiaki Kawazu",
