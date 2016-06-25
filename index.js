@@ -31,26 +31,30 @@ function run(args, noDownload) {
 }
 
 function download() {
-  const fetch = require('node-fetch');
-  const binPathTmp = `${binPath}.tmp`;
-  return fetch("https://api.github.com/repos/apex/apex/releases")
-    .then(res => res.json())
-    .then(json => fetch(json[0].assets.filter(a => a.name == binName)[0].browser_download_url))
-    .then(res => new Promise((ok, ng)=>{
-      const w = res.body.pipe(fs.createWriteStream(binPathTmp, {mode: 0755}));
-      w.once('error', ng);
-      w.once('finish', ok);
-    }))
-  .then(() => new Promise((ok, ng)=>{
-    fs.rename(binPathTmp, binPath, (err) => {
-      if(err) return ng(err);
-      ok()
-    })
-  }))
-  .catch(err => new Promise((ok, ng) => {
-    fs.unlink(binPathTmp, (err) => {
-      if(err) return ng(err);
-      ok()
-    })
-  }))
+  try {
+    const fetch = require('node-fetch');
+    const binPathTmp = `${binPath}.tmp`;
+    return fetch("https://api.github.com/repos/apex/apex/releases")
+      .then(res => res.json())
+      .then(json => fetch(json[0].assets.filter(a => a.name == binName)[0].browser_download_url))
+      .then(res => new Promise((ok, ng)=>{
+        const w = res.body.pipe(fs.createWriteStream(binPathTmp, {mode: 0755}));
+        w.once('error', ng);
+        w.once('finish', ok);
+      }))
+      .then(() => new Promise((ok, ng)=>{
+        fs.rename(binPathTmp, binPath, (err) => {
+          if(err) return ng(err);
+          ok()
+        })
+      }))
+      .catch(err => new Promise((ok, ng) => {
+        fs.unlink(binPathTmp, (err) => {
+          if(err) return ng(err);
+          ok()
+        })
+      }))
+  } catch(err) {
+    return Promise.reject(err)
+  }
 }
