@@ -11,7 +11,7 @@ module.exports = {
   run
 };
 
-function run(args, tryDownload = true) {
+function run(args, noDownload) {
   return new Promise((ok, ng) => {
     require('child_process')
       .spawn(binPath, args, {stdio: 'inherit'})
@@ -20,9 +20,12 @@ function run(args, tryDownload = true) {
   })
   .then(process.exit)
   .catch(err => {
-    if(tryDownload && err.code == 'ENOENT') {
-      return download().then(() => run(args, false))
+    if(err.code != 'ENOENT' || noDownload) {
+      return Promise.reject(err)
     }
+    return download().then(() => run(args, true))
+  })
+  .catch(err => {
     console.error(err);
     process.exit(1)
   })
