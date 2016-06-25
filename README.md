@@ -1,5 +1,7 @@
 # apex-bin
 
+[![Build Status](https://travis-ci.org/kawaz/apex-bin.svg?branch=master)](https://travis-ci.org/kawaz/apex-bin)
+
 ## Install
 
 ```
